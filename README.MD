@@ -117,33 +117,6 @@ spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-Em ```spring.datasource.username=``` e ```spring.datasource.password=``` deve ser preenchidos de acordo com o BD local
-
----
-
-## 🚀 Como Executar  
-
-1. **Clonar o repositório:**  
-   ```bash
-   git clone https://github.com/usuario/toDoList.git
-   ```
-
-2. **Configurar o banco de dados PostgreSQL:**  
-   - Criar um banco chamado `todolist`.
-   - Ajustar usuário e senha no `application.properties`.
-
-3. **Executar a aplicação:**  
-   - No terminal, dentro da pasta do projeto:  
-     ```bash
-     mvn spring-boot:run
-     ```
-   - Ou, pelo IDE (NetBeans, IntelliJ, Eclipse), executar a classe principal `ToDoListApplication.java`.
-
-4. **Testar os endpoints:**  
-   - Usar ferramentas como **Talend API Tester** ou **Postman**.  
-   - A API rodará em:  
-     ```
-     http://localhost:8081/tarefas-api/
-     ```
+Obs: ```spring.datasource.username=``` e ```spring.datasource.password=``` devem ser preenchidos de acordo com o BD local
 
 ---
