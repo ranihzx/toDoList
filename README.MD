@@ -96,9 +96,9 @@ Principais métodos:
 | **GET** | `/tarefas-api/` | Lista todas as tarefas (com filtro opcional por descrição) |
 | **GET** | `/tarefas-api/{id}` | Busca uma tarefa pelo ID |
 | **PUT** | `/tarefas-api/{id}` | Atualiza uma tarefa existente |
-│ **DELETE** │ `/tarefas-api/{id}` │ Deleta uma tarefa pelo ID │
+| **DELETE** | `/tarefas-api/{id}` | Deleta uma tarefa pelo ID |
 | **GET** | `/tarefas-api/pendentes` | Lista apenas as tarefas não concluídas |
-│ **PATCH** │ `/tarefas-api/{id}/concluir` │ Marca uma tarefa como concluída │
+| **PATCH** | `/tarefas-api/{id}/concluir` | Marca uma tarefa como concluída |
 
 ---
 
