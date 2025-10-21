@@ -34,11 +34,11 @@ O projeto foi organizado em três camadas principais:
 ```
 dw.toDoList
  ├── model
- │   ├── Tarefa.java
- │   └── repository
+ │   ├── control
+ │       └── TarefaController.java
+ │   ├── repository
  │       └── TarefaRepository.java
- ├── control
- │   └── TarefaController.java
+ │   └── Tarefa.java
  └── ToDoListApplication.java
 ```
 
@@ -47,20 +47,25 @@ Contém a entidade **Tarefa**, que representa a tabela no banco de dados.
 
 ```java
 @Entity
-@Table(name = "tarefas")
+@Table(name = "tarefa")
 public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(length = 100, nullable = false)
+    private Long id;
+    
+    @Column(length = 100)
+    @NotBlank
     private String descricao;
 
-    @Column(nullable = false)
-    private boolean concluida = false;
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean concluida;
 
-    @Column(nullable = false)
+    @Column
+    @NotNull
+    @Min(1) @Max(5)
     private int prioridade;
+
+    [...]
 }
 ```
 
@@ -72,7 +77,8 @@ Interface responsável pela comunicação com o banco de dados, utilizando **Spr
 ```java
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
     List<Tarefa> findByDescricaoContaining(String descricao);
-    List<Tarefa> findByConcluida(boolean concluida);
+
+    List<Tarefa> findByConcluida(boolean status);
 }
 ```
 
@@ -90,7 +96,9 @@ Principais métodos:
 | **GET** | `/tarefas-api/` | Lista todas as tarefas (com filtro opcional por descrição) |
 | **GET** | `/tarefas-api/{id}` | Busca uma tarefa pelo ID |
 | **PUT** | `/tarefas-api/{id}` | Atualiza uma tarefa existente |
+│ **DELETE** │ `/tarefas-api/{id}` │ Deleta uma tarefa pelo ID │
 | **GET** | `/tarefas-api/pendentes` | Lista apenas as tarefas não concluídas |
+│ **PATCH** │ `/tarefas-api/{id}/concluir` │ Marca uma tarefa como concluída │
 
 ---
 
@@ -99,15 +107,17 @@ Principais métodos:
 O arquivo `application.properties` contém as configurações principais:
 
 ```properties
-server.port=8081
 server.servlet.context-path=/tarefas-api
+server.port=8081
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/todolist
-spring.datasource.username=postgres
-spring.datasource.password=suasenha
+### Database configuration ###
+spring.datasource.url=jdbc:postgresql://localhost:5432/tarefasdb
+spring.datasource.username=
+spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
 ```
+
+Em ```spring.datasource.username=``` e ```spring.datasource.password=``` deve ser preenchidos de acordo com o BD local
 
 ---
 
@@ -137,18 +147,3 @@ spring.jpa.show-sql=true
      ```
 
 ---
-
-## 🧠 Aprendizados  
-
-Durante o desenvolvimento, o grupo pôde praticar:
-- A criação de uma API REST completa com Spring Boot.  
-- O uso de **JPA** para persistência de dados.  
-- A estruturação de projetos em **camadas (MVC)**.  
-- O uso de **requisições HTTP (GET, POST, PUT)** e **validação de dados**.  
-
----
-
-## 💬 Considerações Finais  
-
-Este projeto proporcionou uma experiência prática com o desenvolvimento backend em Java, aplicando conceitos essenciais de APIs RESTful e integração com banco de dados relacional.  
-A aplicação está pronta para servir como base de um sistema de produtividade mais completo, que pode futuramente receber uma interface web ou mobile.
